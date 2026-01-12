@@ -1,0 +1,71 @@
+.builder-leftbar-custom {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  .layout-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .menu-top {
+    flex-grow: 1;
+    padding-top: 1rem;
+  }
+
+  .menu-bottom {
+    padding-bottom: 1rem;
+    margin-top: auto;
+    justify-content: end;
+  }
+
+  .layout-menuitem-text {
+    white-space: nowrap;
+    opacity: 0;
+    margin-left: 1rem;
+    transition: opacity 0.2s ease-in-out;
+    font-weight: 500;
+  }
+
+  &:hover .layout-menuitem-text {
+    opacity: 1;
+    transition-delay: 0.1s;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0.5rem;
+    padding-left: 1.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--d-admin-text-color-secondary);
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 0; /* Full width typically has no radius or small radius */
+    margin: 0.2rem 0.5rem; /* Little margin for floating effect */
+    border-radius: 6px;
+
+    &:hover {
+      color: var(--d-admin-text-color);
+      background-color: var(--d-admin-surface-hover);
+    }
+
+    &.active-item {
+      color: var(--d-admin-primary-color);
+      background-color: var(--surface-highlight);
+      font-weight: 700;
+    }
+
+    .layout-menuitem-icon {
+      font-size: 1.5rem;
+      min-width: 1.5rem;
+      flex-shrink: 0;
+    }
+  }
+}

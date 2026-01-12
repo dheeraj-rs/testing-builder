@@ -1,0 +1,36 @@
+import { Language } from '@/core/types/i18n';
+
+export const menuTranslations: Record<Language, Record<string, string>> = {
+  en: {
+    'menu.home': 'Home',
+    'menu.dashboard': 'Dashboard',
+    'menu.builder': 'Builder',
+    'menu.website.builder.ai': 'Website Builder AI',
+    'menu.website.builder.snippet': 'Website Builder Snippet',
+    'menu.ui.components': 'UI Components',
+    'menu.elements': 'Elements',
+    'menu.buttons': 'Buttons',
+    'menu.buttons2': 'Buttons 2',
+    'menu.forms': 'Forms',
+    'menu.forms2': 'Forms 2',
+    'menu.system': 'System',
+    'menu.settings': 'Settings',
+    'menu.profile': 'Profile',
+  },
+  hi: {
+    'menu.home': 'होम',
+    'menu.dashboard': 'डैशबोर्ड',
+    'menu.builder': 'बिल्डर',
+    'menu.website.builder.ai': 'वेबसाइट बिल्डर एआई',
+    'menu.website.builder.snippet': 'वेबसाइट बिल्डर स्निपेट',
+    'menu.ui.components': 'यूआई कंपोनेंट्स',
+    'menu.elements': 'एलीमेंट्स',
+    'menu.buttons': 'बटन्स',
+    'menu.buttons2': 'बटन्स 2',
+    'menu.forms': 'फॉर्म्स',
+    'menu.forms2': 'फॉर्म्स 2',
+    'menu.system': 'सिस्टम',
+    'menu.settings': 'सेटिंग्स',
+    'menu.profile': 'प्रोफ़ाइल',
+  },
+};

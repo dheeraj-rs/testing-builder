@@ -1,0 +1,109 @@
+// Core Variables
+$xxs: 360px !default;
+$xs: 480px !default;
+$sm: 576px !default;
+$sm1: 600px !default;
+$sm2: 640px !default;
+$md: 768px !default;
+$md1: 991px !default;
+$lg: 992px !default;
+$xl: 1200px !default;
+$lg: 1024px !default;
+$xl: 1280px !default;
+$xl1: 1400px !default;
+$xxl: 1536px !default;
+$xxl1: 1600px !default;
+$xxxl: 1960px !default;
+
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+) !default;
+$radius: 0.5rem;
+$spacer: 1rem !default;
+$prefix: '' !default;
+$separator: '\\:' !default;
+$card-depth: 20px;
+
+// Base Layout Settings
+$padding-layout-base: 0.5rem;
+$border-radius-layout-base: 6px;
+$box-shadow-layout-base: 0px 3px 5px rgba(0, 0, 0, 0.02),
+  0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
+$box-shadow-layout-base-3d: 0 $card-depth ($card-depth * 1.5) rgba(0, 0, 0, 0.2),
+  0 4px 8px rgba(255, 255, 255, 0.1) inset;
+$linear-gradient-layout-separator: linear-gradient(
+  90deg,
+  transparent 0%,
+  var(--d-admin-surface-border) 20%,
+  var(--d-admin-surface-border) 80%,
+  transparent 100%
+);
+$z-index-layout-max: 9999;
+$z-index-layout-mask: 997;
+
+//  Animation Settings
+$duration-transition-base: 0.3s;
+$easing-transition-base: ease-in-out;
+
+//  Topbar Variables
+$height-topbar-base: 5rem;
+$z-index-topbar-base: 998;
+$z-index-topbar-mask: 998;
+
+//  Bottombar Variables
+$width-bottombar-base: 5rem;
+$height-bottombar-base: 4rem;
+$width-bottombar-hover: calc(100% - #{$padding-layout-base * 2});
+$height-bottombar-hover: 300px;
+$width-bottombar-expanded: 300px;
+$height-bottombar-mobile: 5rem;
+$width-bottombar-mobile: calc(100% - $padding-layout-base * 2);
+$z-index-bottombar-mask: 997;
+$z-index-bottombar-base: 998;
+
+// Config Variables
+$width-config-expanded: 300px;
+$top-config-base: calc($height-topbar-base + $padding-layout-base * 2);
+$height-config-base: calc(
+  100% -
+    (
+      #{4 * $padding-layout-base} + #{$height-topbar-base} + #{$height-bottombar-base}
+    )
+);
+$height-config-overlay: calc(100% - #{$padding-layout-base * 2});
+$height-config-inactive-topbar: calc(
+  100% - (#{3 * $padding-layout-base} + #{$height-bottombar-base})
+);
+$height-config-inactive-bottombar: calc(
+  100% - (#{3 * $padding-layout-base} + #{$height-topbar-base})
+);
+$z-index-config-base: 998;
+
+// Sidebar Variables
+$height-sidebar-base: calc(
+  100% - #{$height-topbar-base + $padding-layout-base * 3}
+);
+$width-sidebar-expanded: 300px;
+$width-sidebar-base: 5rem;
+$top-sidebar-base: calc($height-topbar-base + $padding-layout-base * 2);
+$height-sidebar-overlay: calc(100% - #{$padding-layout-base * 2});
+$height-sidebar-menu: calc(100% - #{$height-bottombar-base});
+$z-index-sidebar-base: 998;
+
+// Main Container Variables
+$margin-left-main-container-shrink: calc(
+  $width-sidebar-expanded + $padding-layout-base
+);
+$margin-left-main-container-expanded: calc(
+  $width-sidebar-base + $padding-layout-base
+);
+$margin-right-main-container-shrink: calc(
+  $width-config-expanded + $padding-layout-base
+);
+$height-main-container: calc(
+  100vh - #{$height-topbar-base + $padding-layout-base * 3}
+);
+$height-main-container-topbar-hide: calc(100vh - #{$padding-layout-base * 2});

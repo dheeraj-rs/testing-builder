@@ -1,0 +1,170 @@
+@use '../variables' as *;
+
+.layout__topbar {
+  z-index: $z-index-topbar-base;
+  .layout-topbar-main {
+    position: fixed;
+    min-width: 300px;
+    max-width: 100%;
+    width: calc(100% - $padding-layout-base * 2);
+    height: $height-topbar-base;
+    margin: $padding-layout-base;
+    padding: $padding-layout-base;
+    border-radius: $border-radius-layout-base;
+    border: 1px solid var(--d-admin-surface-border);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style: none;
+    background-color: var(--d-admin-surface-section);
+    z-index: 9998;
+    color: var(--d-admin-text-color-secondary);
+    will-change: transform, background-color, box-shadow, border;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .layout-topbar-mask {
+    width: calc(100% - $padding-layout-base * 2);
+    margin: 0 0.5rem;
+    height: $height-topbar-base;
+    background-color: var(--d-admin-surface-ground);
+    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    z-index: $z-index-topbar-mask;
+  }
+}
+
+.layout__sidebar {
+  background-color: var(--d-admin-surface-section);
+  width: $width-sidebar-expanded;
+  min-width: $width-sidebar-base;
+  height: $height-sidebar-base;
+  border-radius: $border-radius-layout-base;
+  border: 1px solid var(--d-admin-surface-border);
+  color: var(--d-admin-text-color-secondary);
+  user-select: none;
+  position: fixed;
+  top: $top-sidebar-base;
+  left: $padding-layout-base;
+  z-index: $z-index-sidebar-base;
+  transition: transform $duration-transition-base $easing-transition-base,
+    left $duration-transition-base $easing-transition-base,
+    width $duration-transition-base $easing-transition-base,
+    height $duration-transition-base $easing-transition-base,
+    $duration-transition-base;
+  transform: translateX(0);
+}
+
+.layout__config {
+  width: $width-config-expanded;
+  background-color: var(--d-admin-surface-section);
+  border-radius: $border-radius-layout-base;
+  overflow-y: auto;
+  user-select: none;
+  position: fixed;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid var(--d-admin-surface-border);
+  transition: transform $duration-transition-base,
+    right $duration-transition-base, height $duration-transition-base,
+    top $duration-transition-base;
+  top: $top-config-base;
+  right: $padding-layout-base;
+  height: $height-config-base;
+  z-index: $z-index-config-base;
+  scrollbar-width: none;
+}
+
+.layout__mask {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--d-admin-maskbg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  animation: fadein $duration-transition-base;
+  z-index: 9998;
+}
+
+.layout__container {
+  margin: 0;
+  box-sizing: border-box;
+  contain: layout;
+  padding: var(--container-padding-top) var(--container-padding-right)
+    var(--container-padding-bottom) var(--container-padding-left);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: margin-left $duration-transition-base,
+    margin-right $duration-transition-base,
+    padding 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    padding-bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    min-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.layout__bottombar {
+  transition: transform $duration-transition-base $easing-transition-base,
+    visibility 0s linear $duration-transition-base;
+  z-index: $z-index-bottombar-mask;
+
+  .layout-bottombar-desktop {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    position: fixed;
+    right: $padding-layout-base;
+    bottom: $padding-layout-base;
+    background-color: var(--d-admin-surface-section);
+    border-radius: $border-radius-layout-base;
+    border: 1px solid var(--d-admin-surface-border);
+    transition: transform $duration-transition-base $easing-transition-base,
+      right $duration-transition-base $easing-transition-base,
+      left $duration-transition-base $easing-transition-base,
+      width $duration-transition-base $easing-transition-base,
+      height $duration-transition-base $easing-transition-base
+        $duration-transition-base;
+    &:not(:hover) {
+      transition: transform $duration-transition-base $easing-transition-base,
+        right $duration-transition-base $easing-transition-base,
+        left $duration-transition-base $easing-transition-base,
+        height $duration-transition-base $easing-transition-base,
+        width $duration-transition-base $easing-transition-base
+          $duration-transition-base,
+        z-index $duration-transition-base linear $duration-transition-base;
+      width: $width-bottombar-base;
+      height: $height-bottombar-base;
+      z-index: $z-index-bottombar-mask;
+    }
+  }
+
+  .layout-bottombar-mobile {
+    display: none;
+    position: fixed;
+    bottom: $padding-layout-base;
+    right: $padding-layout-base;
+    flex: 1 1 auto;
+    width: $width-bottombar-mobile;
+    height: $height-bottombar-base;
+    background-color: var(--d-admin-surface-section);
+    box-shadow: $box-shadow-layout-base-3d;
+    border-radius: $border-radius-layout-base;
+    z-index: $z-index-bottombar-base;
+    transform: translateX(100%);
+    border: 1px solid var(--d-admin-surface-border);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .layout-bottombar-mask {
+    width: 100%;
+    height: $height-bottombar-base;
+    background-color: var(--d-admin-surface-ground);
+    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    bottom: 0;
+    z-index: $z-index-bottombar-mask;
+    display: none;
+  }
+}

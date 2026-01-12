@@ -1,0 +1,12 @@
+@use '../variables' as *;
+
+.children__wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: $border-radius-layout-base;
+  border: 1px solid var(--d-admin-surface-border);
+  isolation: isolate;
+  transform: translateZ(0);
+  overflow: hidden;
+}

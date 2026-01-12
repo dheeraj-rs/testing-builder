@@ -1,0 +1,23 @@
+@use '../variables' as *;
+
+.p-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.p-ink {
+  display: block;
+  position: absolute;
+  background: var(--d-admin-primary-color, rgba(255, 255, 255, 0.5));
+  border-radius: 100%;
+  transform: scale(0);
+  pointer-events: none;
+
+  &.p-ink-active {
+    animation: ripple 0.4s linear;
+  }
+}
+
+.p-ink.p-ink-active {
+  animation: ripple 0.4s linear;
+}

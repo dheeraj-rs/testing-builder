@@ -1,0 +1,294 @@
+@use '../variables' as *;
+
+.dashboard-topbar {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  z-index: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+
+  @media (max-width: $md) {
+    padding-left: 60px;
+  }
+
+  .dashboard-topbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 0 1.5rem;
+    gap: 1rem;
+
+    @media (max-width: $md) {
+      padding: 0 1rem;
+    }
+  }
+
+  // Left side - Logo and title
+  .topbar-left {
+    display: flex;
+    align-items: center; // Vertically center logo
+    gap: 1rem;
+    flex-shrink: 0;
+
+    .topbar-logo {
+      display: flex;
+      align-items: center; // Vertically center logo elements
+      gap: 0.75rem;
+
+      .logo-name {
+        font-size: 5rem;
+        font-weight: 700;
+        color: var(--d-admin-text-color);
+        letter-spacing: 0.5px;
+        line-height: 1; // Proper vertical alignment
+
+        @media (max-width: $md) {
+          display: none;
+        }
+      }
+    }
+
+    .topbar-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--d-admin-text-color);
+      margin: 0;
+      line-height: 1; // Proper vertical alignment
+
+      @media (max-width: $lg) {
+        display: none;
+      }
+    }
+  }
+
+  // Right side - Actions and menus
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+
+    // Action buttons container
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      @media (max-width: $md) {
+        display: none; // Hide on mobile, use kebab menu instead
+      }
+    }
+
+    .topbar-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      background: linear-gradient(
+        135deg,
+        var(--d-admin-primary-color) 0%,
+        #764ba2 100%
+      );
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      .btn-label {
+        @media (max-width: $lg) {
+          display: none;
+        }
+      }
+
+      &.settings-btn {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+        &:hover {
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+      }
+    }
+
+    // User avatar button
+    .user-avatar-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: 2px solid var(--d-admin-surface-border);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+
+      &:hover {
+        border-color: var(--d-admin-primary-color);
+        background: var(--d-admin-surface-hover);
+      }
+
+      .user-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--d-admin-text-color-secondary);
+      }
+    }
+
+    // Kebab menu button
+    .kebab-menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--d-admin-text-color-secondary);
+      padding: 0;
+
+      &:hover {
+        background: var(--d-admin-surface-hover);
+        color: var(--d-admin-text-color);
+      }
+    }
+
+    // Menu overlay
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      background: transparent;
+    }
+
+    // User menu dropdown
+    .user-menu-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 50px;
+      min-width: 180px;
+      background: var(--d-admin-surface-card);
+      border: 1px solid var(--d-admin-surface-border);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      z-index: 999;
+      overflow: hidden;
+      animation: slideDown 0.2s ease;
+
+      .user-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.875rem 1rem;
+        background: transparent;
+        border: none;
+        color: var(--d-admin-text-color);
+        font-size: 0.9375rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: left;
+
+        &:hover:not(:disabled) {
+          background: var(--d-admin-surface-hover);
+        }
+
+        &.logout-item {
+          color: #ef4444;
+
+          &:hover:not(:disabled) {
+            background: rgba(239, 68, 68, 0.1);
+          }
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    // Kebab menu dropdown
+    .kebab-menu-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      min-width: 200px;
+      background: var(--d-admin-surface-card);
+      border: 1px solid var(--d-admin-surface-border);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      z-index: 999;
+      overflow: hidden;
+      animation: slideDown 0.2s ease;
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.875rem 1rem;
+        background: transparent;
+        border: none;
+        color: var(--d-admin-text-color);
+        font-size: 0.9375rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: left;
+
+        &:hover:not(:disabled) {
+          background: var(--d-admin-surface-hover);
+        }
+
+        &.logout-item {
+          color: #ef4444;
+          border-top: 1px solid var(--d-admin-surface-border);
+
+          &:hover:not(:disabled) {
+            background: rgba(239, 68, 68, 0.1);
+          }
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

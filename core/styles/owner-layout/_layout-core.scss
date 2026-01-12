@@ -1,0 +1,196 @@
+@use '../variables' as *;
+
+.owner-dashboard-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--d-admin-surface-ground);
+
+  .dashboard-main-panel {
+    flex: 1;
+    display: flex;
+    background: var(--d-admin-surface-card);
+    overflow: hidden;
+
+    .owner-dashboard-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--d-admin-surface-card);
+      position: relative;
+
+      @media (max-width: $md) {
+        margin-left: 0;
+      }
+
+      .dashboard-topbar {
+        position: relative;
+        width: 100%;
+        height: 70px;
+        z-index: 1;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        padding-left: 2rem;
+
+        @media (max-width: $md) {
+          padding-left: 60px;
+        }
+      }
+
+      .emails-page-container {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin: 0 1rem 1rem 0;
+        padding: 1.5rem;
+        background: var(--d-admin-surface-ground);
+        border: 1px solid var(--d-admin-surface-border);
+        border-radius: 16px;
+
+        @media (max-width: $md) {
+          margin: 0.75rem;
+          padding: 1rem;
+          border-radius: 12px;
+        }
+
+        scrollbar-width: thin;
+        scrollbar-color: var(--d-admin-surface-border) transparent;
+
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: var(--d-admin-surface-border);
+          border-radius: 3px;
+
+          &:hover {
+            background: var(--d-admin-text-color-secondary);
+          }
+        }
+      }
+    }
+  }
+}
+
+.dashboard-sidebar-mobile-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: $z-index-layout-max;
+  width: 40px;
+  height: 40px;
+  background: var(--d-admin-surface-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--d-admin-surface-border);
+  border-radius: 6px;
+  color: var(--d-admin-text-color);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  @media (max-width: $md) {
+    display: flex;
+  }
+
+  &:hover {
+    background: var(--d-admin-surface-hover);
+    border-color: var(--d-admin-primary-color);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.dashboard-sidebar {
+  position: relative;
+  width: 100px;
+  height: 100%;
+  background: var(--d-admin-surface-card);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  transition: transform $duration-transition-base $easing-transition-base;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding-top: 6rem;
+
+  @media (max-width: $md) {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: 0 4px 20px var(--d-admin-maskbg);
+    transform: translateX(-100%);
+    z-index: $z-index-layout-max;
+    padding-top: 0;
+
+    &.mobile-open {
+      transform: translateX(0);
+    }
+  }
+
+  .dashboard-sidebar-close {
+    display: none;
+    @media (max-width: $md) {
+      display: flex;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid var(--d-admin-surface-border);
+      border-radius: 6px;
+      color: var(--d-admin-text-color-secondary);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: var(--d-admin-surface-hover);
+        border-color: var(--d-admin-surface-border);
+        color: var(--d-admin-text-color);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+.dashboard-sidebar-overlay {
+  display: none;
+
+  @media (max-width: $md) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--d-admin-maskbg);
+    z-index: $z-index-layout-mask;
+    backdrop-filter: blur(2px);
+  }
+}
