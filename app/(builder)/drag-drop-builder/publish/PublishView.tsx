@@ -44,6 +44,45 @@ export default function PublishView() {
         return localStorage.getItem('drag-drop-builder-format') || 'html';
     };
 
+    /**
+     * Extract all image URLs from HTML content that reference the /uploaded/ folder
+     */
+    const extractUploadedImageUrls = (htmlContent: string): string[] => {
+        const imgRegex = /<img[^>]+src=["']([^"']+)["']/gi;
+        const urls: string[] = [];
+        let match;
+
+        while ((match = imgRegex.exec(htmlContent)) !== null) {
+            const url = match[1];
+            // Only include images from the /uploaded/ folder
+            if (url.includes('/uploaded/')) {
+                urls.push(url);
+            }
+        }
+
+        return [...new Set(urls)]; // Remove duplicates
+    };
+
+    /**
+     * Fetch an image and convert it to base64 data URI
+     */
+    const fetchImageAsBase64 = async (imageUrl: string): Promise<string> => {
+        try {
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result as string);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        } catch (error) {
+            console.error(`Failed to fetch image: ${imageUrl}`, error);
+            return imageUrl; // Return original URL if fetch fails
+        }
+    };
+
     const pollDeploymentStatus = async (deploymentId: string, teamId?: string) => {
         const pollInterval = setInterval(async () => {
             try {
@@ -96,7 +135,21 @@ export default function PublishView() {
         setProgress(0);
 
         try {
-            // Convert HTML content to deployable files
+            // Extract uploaded image URLs and convert to base64
+            const imageUrls = extractUploadedImageUrls(htmlContent);
+
+            // Convert images to base64 and replace in HTML
+            let processedHtml = htmlContent;
+            for (const imageUrl of imageUrls) {
+                const base64 = await fetchImageAsBase64(imageUrl);
+                // Replace all occurrences of this image URL with base64
+                processedHtml = processedHtml.replace(
+                    new RegExp(imageUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+                    base64
+                );
+            }
+
+            // Convert HTML content to deployable files with embedded images
             const fullHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,7 +159,7 @@ export default function PublishView() {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></link>
 </head>
 <body>
-${htmlContent}
+${processedHtml}
 </body>
 </html>`;
 

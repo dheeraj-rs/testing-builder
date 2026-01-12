@@ -2,9 +2,72 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
 /**
- * Export as standalone HTML file with inline Tailwind CSS CDN
+ * Extract all image URLs from HTML content that reference the /uploaded/ folder
  */
-export const exportAsHTML = (htmlContent: string) => {
+const extractUploadedImageUrls = (htmlContent: string): string[] => {
+  const imgRegex = /<img[^>]+src=["']([^"']+)["']/gi;
+  const urls: string[] = [];
+  let match;
+
+  while ((match = imgRegex.exec(htmlContent)) !== null) {
+    const url = match[1];
+    // Only include images from the /uploaded/ folder
+    if (url.includes('/uploaded/')) {
+      urls.push(url);
+    }
+  }
+
+  return [...new Set(urls)]; // Remove duplicates
+};
+
+/**
+ * Fetch an image and convert it to base64 data URI
+ */
+const fetchImageAsBase64 = async (imageUrl: string): Promise<string> => {
+  try {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    console.error(`Failed to fetch image: ${imageUrl}`, error);
+    return imageUrl; // Return original URL if fetch fails
+  }
+};
+
+/**
+ * Fetch an image as a blob for bundling in zip
+ */
+const fetchImageAsBlob = async (imageUrl: string): Promise<Blob | null> => {
+  try {
+    const response = await fetch(imageUrl);
+    return await response.blob();
+  } catch (error) {
+    console.error(`Failed to fetch image: ${imageUrl}`, error);
+    return null;
+  }
+};
+
+/**
+ * Export as standalone HTML file with inline Tailwind CSS CDN and embedded images
+ */
+export const exportAsHTML = async (htmlContent: string) => {
+  // Extract uploaded image URLs
+  const imageUrls = extractUploadedImageUrls(htmlContent);
+
+  // Convert images to base64 and replace in HTML
+  let processedHtml = htmlContent;
+  for (const imageUrl of imageUrls) {
+    const base64 = await fetchImageAsBase64(imageUrl);
+    // Replace all occurrences of this image URL with base64
+    processedHtml = processedHtml.replace(new RegExp(imageUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), base64);
+  }
+
   const fullHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +77,7 @@ export const exportAsHTML = (htmlContent: string) => {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></link>
 </head>
 <body>
-${htmlContent}
+${processedHtml}
 </body>
 </html>`;
 
@@ -23,10 +86,26 @@ ${htmlContent}
 };
 
 /**
- * Export as React + Vite + Tailwind CSS project
+ * Export as React + Vite + Tailwind CSS project with bundled images
  */
 export const exportAsReactProject = async (htmlContent: string) => {
   const zip = new JSZip();
+
+  // Extract uploaded image URLs and bundle them
+  const imageUrls = extractUploadedImageUrls(htmlContent);
+
+  // Create public folder and add images
+  const publicFolder = zip.folder('public');
+  const uploadedFolder = publicFolder?.folder('uploaded');
+
+  for (const imageUrl of imageUrls) {
+    const blob = await fetchImageAsBlob(imageUrl);
+    if (blob && uploadedFolder) {
+      // Extract filename from URL
+      const filename = imageUrl.split('/uploaded/').pop() || 'image.png';
+      uploadedFolder.file(filename, blob);
+    }
+  }
 
   // 1. package.json
   const packageJson = {
