@@ -100,7 +100,7 @@ export function ButtonDialog({ isOpen, onClose, element }: ButtonDialogProps) {
                             Update Button
                         </DialogPrimitive.Title>
 
-                        <DialogPrimitive.Description className="mt-2 text-sm font-normal text-(--d-admin-text-color-secondary)">
+                        <div className="mt-2 text-sm font-normal text-(--d-admin-text-color-secondary)">
                             <div className="mt-4 mb-4">
                                 <div>
                                     <Select
@@ -130,7 +130,7 @@ export function ButtonDialog({ isOpen, onClose, element }: ButtonDialogProps) {
                                                     onChange={(e) => setUrl(e.target.value)}
                                                 />
                                                 <div className="flex items-center ml-4">
-                                                    <p>Open in new tab</p>
+                                                    <span>Open in new tab</span>
                                                     <input
                                                         defaultChecked={newTab}
                                                         type="checkbox"
@@ -179,7 +179,7 @@ export function ButtonDialog({ isOpen, onClose, element }: ButtonDialogProps) {
                                                     />
                                                 </div>
                                                 <div className="flex items-center ml-4">
-                                                    <p>Async</p>
+                                                    <span>Async</span>
                                                     <input
                                                         defaultChecked={submitAsync}
                                                         type="checkbox"
@@ -192,7 +192,7 @@ export function ButtonDialog({ isOpen, onClose, element }: ButtonDialogProps) {
                                     </div>
                                 </div>
                             </div>
-                        </DialogPrimitive.Description>
+                        </div>
 
                         <div className="mt-4 flex justify-end">
                             <DialogPrimitive.Close

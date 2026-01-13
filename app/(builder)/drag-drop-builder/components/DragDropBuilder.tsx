@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import TrashIcon from '@heroicons/react/24/outline/TrashIcon';
 import ArrowDownIcon from '@heroicons/react/24/outline/ArrowDownIcon';
 import ArrowUpIcon from '@heroicons/react/24/outline/ArrowUpIcon';
-import CursorArrowRippleIcon from '@heroicons/react/24/outline/CursorArrowRippleIcon';
+import CursorArrowRaysIcon from '@heroicons/react/24/outline/CursorArrowRaysIcon';
 import Squares2X2Icon from '@heroicons/react/24/outline/Squares2X2Icon';
 import ArrowSmallUpIcon from '@heroicons/react/24/outline/ArrowSmallUpIcon';
 import ChevronDownIcon from '@heroicons/react/24/outline/ChevronDownIcon';
@@ -557,11 +557,11 @@ export default function DragDropBuilder({ standaloneServer = false }: DragDropBu
                     {!isPreview && (
                         <div
                             ref={popoverElementRef}
-                            className="absolute z-10-none bg-gray-500"
+                            className="absolute z-10-none bg-gray-500 rounded-md"
                             style={{ display: hoveredElement ? 'block' : 'none' }}
                         >
                             <div className="flex flex-row p-1">
-                                <CursorArrowRippleIcon
+                                <CursorArrowRaysIcon
                                     ref={optionsRef}
                                     onClick={() => {
                                         setSelectedElement(hoveredElement);
